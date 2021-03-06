@@ -1,23 +1,21 @@
-package com.gmail.merikbest2015.rest;
+package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.model.Customer;
 import com.gmail.merikbest2015.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/customers")
 public class CustomerRestController {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @GetMapping(value = "{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long customerId) {
@@ -35,7 +33,7 @@ public class CustomerRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid Customer customer) {
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         if (customer == null) {
@@ -48,7 +46,7 @@ public class CustomerRestController {
     }
 
     @PutMapping
-    public ResponseEntity<Customer> updateCustomer(@RequestBody @Valid Customer customer, UriComponentsBuilder builder) {
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         if (customer == null) {
